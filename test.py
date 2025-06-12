@@ -73,7 +73,7 @@ def score_surprise(preds: Sequence[Sequence[int]], ground_truth: Sequence[Sequen
 
 
 def main():
-    data_dir = Path.home() / TEAM_TRACK
+    data_dir = Path.home() / TEAM_TRACK / "surprise"
     results_dir = Path.home() / TEAM_NAME
     results_dir.mkdir(parents=True, exist_ok=True)
 
