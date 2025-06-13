@@ -1,3 +1,103 @@
+# TIL-25 Data Chefs - Surprise Challenge
+
+**Hackathon:** TIL-25 Hackathon
+**Team:** Data Chefs
+**Author:** lolkabash
+
+## 📖 Description
+
+This repository contains the solution for the "Surprise Challenge" as part of the TIL-25 Hackathon. The nature of this challenge was [**Describe the surprise challenge briefly here**]. This project outlines our approach and implementation to tackle it.
+
+## 💻 Technologies Used
+
+*   **Python:** Core programming language for scripting and logic.
+*   **Shell Scripts:** For automation, setup, or execution tasks.
+*   **Dockerfile:** Used for containerizing the application/solution, ensuring portability and consistent environments.
+*   **(Mention any other specific libraries, frameworks, or tools used to solve the challenge.)**
+
+## ⚙️ Working Process & Solution
+
+This section outlines the approach taken to understand and solve the surprise challenge.
+
+### 1. Understanding the Challenge
+*   **Problem Deconstruction:** (How did you break down the surprise problem into manageable parts?)
+*   **Initial Brainstorming & Ideas:** (What were the initial thoughts or strategies to solve it?)
+*   **Constraints & Requirements:** (Any specific constraints or requirements given for the challenge?)
+
+### 2. Approach & Strategy
+*   **Chosen Solution Path:** (Describe the overall strategy or algorithm decided upon.)
+*   **Rationale:** (Why was this particular approach chosen over others?)
+*   **Key Components:** (What are the main building blocks of your solution?)
+
+### 3. Implementation Details
+*   **Core Logic:** (Explain the main parts of your Python code or scripts.)
+*   **Dockerization:** (How was Docker used? What does the Dockerfile set up? Any specific base images or configurations?)
+*   **Data Handling (if any):** (If the challenge involved data, how was it processed, stored, or managed?)
+*   **Workflow:** (Describe the sequence of steps your solution takes to produce the output or solve the problem.)
+
+### 4. Outcome & Results
+*   **Solution Output:** (What does your solution produce? How does it meet the challenge requirements?)
+*   **Effectiveness/Performance:** (Any metrics or observations on how well the solution performed?)
+*   **Challenges Faced:** (Any significant hurdles during implementation and how they were overcome.)
+
+## 🚀 Setup and Usage
+
+### Prerequisites
+*   Python (version, e.g., 3.8+)
+*   Docker (if applicable)
+*   Git
+*   (List other major dependencies or system requirements)
+
+### Installation & Setup
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/lolkabash/til-25-data-chefs-surprise.git
+    cd til-25-data-chefs-surprise
+    ```
+2.  **(Python dependencies - if not fully handled by Docker)**
+    ```bash
+    pip install -r requirements.txt
+    ```
+3.  **(Docker Setup - if applicable)**
+    Build the Docker image:
+    ```bash
+    docker build -t surprise-challenge-solution .
+    ```
+
+### Running the Solution
+*   **(If Dockerized):**
+    ```bash
+    docker run surprise-challenge-solution [any_arguments_needed]
+    ```
+    *(Explain what the Docker container does and how to interact with it or see its output.)*
+*   **(If running with Python scripts directly):**
+    ```bash
+    python main_script.py [any_arguments_needed]
+    ```
+    *(Explain the main script and any necessary arguments.)*
+*   **(If using Shell scripts):**
+    ```bash
+    ./run_solution.sh
+    ```
+
+## 📁 File Structure (Optional - Example)
+
+```
+til-25-data-chefs-surprise/
+├── src/                        # Python source code
+├── scripts/                    # Shell scripts
+├── data/                       # Input/output data for the challenge (if applicable)
+├── Dockerfile                  # Docker configuration
+├── .dockerignore               # Files to ignore during Docker build
+├── requirements.txt            # Python dependencies
+├── .gitignore
+└── README.md
+```
+*(Adjust the file structure to match your actual repository layout.)*
+
+## 🙏 Acknowledgements (Optional)
+*   Any resources or tools that were particularly helpful.
+
 # TIL-AI 2025 Surprise Challenge
 
 **Contents**
