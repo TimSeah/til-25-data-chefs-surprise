@@ -6,47 +6,86 @@
 
 ## 📖 Description
 
-This repository contains the solution for the "Surprise Challenge" as part of the TIL-25 Hackathon. The nature of this challenge was [**Describe the surprise challenge briefly here**]. This project outlines our approach and implementation to tackle it.
+This repository contains a solution to the TIL-25 Hackathon "surprise challenge": reconstructing a vertically shredded document from its image slices. Given a list of JPEG-encoded vertical slices, the system must predict the correct permutation to reassemble the original document. This project outlines our approach and implementation to tackle it.
 
 ## 💻 Technologies Used
 
 *   **Python:** Core programming language for scripting and logic.
 *   **Shell Scripts:** For automation, setup, or execution tasks.
 *   **Dockerfile:** Used for containerizing the application/solution, ensuring portability and consistent environments.
-*   **(Mention any other specific libraries, frameworks, or tools used to solve the challenge.)**
+*   **Pillow:** Python Imaging Library (PIL) fork, used for image processing and pixel extraction.
+*   **Uvicorn:** ASGI server for running FastAPI applications in a performant way.
+*   **Base64 (Python standard library):** For encoding/decoding image data as required by the challenge.
 
 ## ⚙️ Working Process & Solution
 
 This section outlines the approach taken to understand and solve the surprise challenge.
 
 ### 1. Understanding the Challenge
-*   **Problem Deconstruction:** (How did you break down the surprise problem into manageable parts?)
-*   **Initial Brainstorming & Ideas:** (What were the initial thoughts or strategies to solve it?)
-*   **Constraints & Requirements:** (Any specific constraints or requirements given for the challenge?)
+*   **Problem Deconstruction:**  
+    The challenge was separated into major tasks: (a) reading and decoding image slices, (b) extracting distinguishing features from each slice, (c) designing a method to measure similarity between slices, and (d) efficiently determining their original left-to-right order.
+*   **Initial Brainstorming & Ideas:**  
+    Several ideas were considered, including using feature matching, template matching, or deep learning. However, since the shreds are vertical and the edges are directly adjacent in the original, a pixel-based edge approach was deemed more direct and robust.
+*   **Constraints & Requirements:**  
+    - All slices are vertical and of uniform height.  
+    - Input slices are provided as base64-encoded JPEG images.
+    - The solution must return a permutation of the input indices in the correct order.
+    - The solution must be efficient and robust, suitable for an API server.
 
 ### 2. Approach & Strategy
-*   **Chosen Solution Path:** (Describe the overall strategy or algorithm decided upon.)
-*   **Rationale:** (Why was this particular approach chosen over others?)
-*   **Key Components:** (What are the main building blocks of your solution?)
+*   **Chosen Solution Path:**  
+    A greedy edge-matching algorithm was selected: compare the right edge of one slice to the left edge of another to build a dissimilarity matrix, then reconstruct the permutation by chaining the best-matching edges.
+*   **Rationale:**  
+    This approach is computationally efficient (quadratic in the number of slices) and leverages the problem structure—adjacent shreds must have visually similar boundaries.
+*   **Key Components:**  
+    - Edge extraction using Pillow.
+    - Dissimilarity (sum of absolute differences) computation for all pairs.
+    - Greedy chaining strategy to build the permutation.
+    - REST API server using FastAPI to handle requests.
 
 ### 3. Implementation Details
-*   **Core Logic:** (Explain the main parts of your Python code or scripts.)
-*   **Dockerization:** (How was Docker used? What does the Dockerfile set up? Any specific base images or configurations?)
-*   **Data Handling (if any):** (If the challenge involved data, how was it processed, stored, or managed?)
-*   **Workflow:** (Describe the sequence of steps your solution takes to produce the output or solve the problem.)
+*   **Core Logic:**  
+      - Each slice is decoded and the leftmost/rightmost columns are extracted as RGB tuples.
+      - For every pair of slices, the sum of absolute differences between their adjacent edges is computed.
+      - The permutation is constructed by starting with the best-matching pair and iteratively adding the next best-matching unused slice to either end.
+*   **Dockerization:**  
+      - The Dockerfile sets up a Python environment with all dependencies (FastAPI, Pillow, Uvicorn, etc).
+      - It uses an official Python base image and specifies commands to install requirements and launch the API server.
+*   **Data Handling:**  
+      - All image data is processed in-memory. Slices are received as base64-encoded JPEGs, decoded on-the-fly, and never written to disk.
+      - No persistent storage is required; all computation is stateless and request-driven.
+*   **Workflow:**  
+      1. API receives a batch of shredded document instances.
+      2. For each instance, image slices are decoded and edge features extracted.
+      3. Dissimilarity matrix is computed for all slice pairs.
+      4. The best permutation is constructed using the greedy chaining strategy.
+      5. The API responds with the predicted permutations for all instances.
 
 ### 4. Outcome & Results
-*   **Solution Output:** (What does your solution produce? How does it meet the challenge requirements?)
-*   **Effectiveness/Performance:** (Any metrics or observations on how well the solution performed?)
-*   **Challenges Faced:** (Any significant hurdles during implementation and how they were overcome.)
+*   **Solution Output:**  
+      The solution returns, for each document instance, an ordered list of indices representing the predicted left-to-right reassembly of the slices.
+*   **Effectiveness/Performance:**  
+      - The greedy algorithm is both fast and robust for typical challenge sizes.
+      - Empirically, the method reconstructs most documents correctly, especially when the edge information is distinctive.
+      - The quadratic time complexity ensures rapid inference even for larger numbers of slices.
+*   **Challenges Faced:**  
+      - Handling images with inconsistent formats or corruption required careful error-checking.
+      - Ensuring efficiency for batch requests led to vectorized operations and in-memory processing.
+      - Fine-tuning the edge comparison metric for robustness (e.g., handling noisy/compressed images).
 
 ## 🚀 Setup and Usage
 
 ### Prerequisites
-*   Python (version, e.g., 3.8+)
-*   Docker (if applicable)
-*   Git
-*   (List other major dependencies or system requirements)
+
+*   **Python 3.8+** (tested on Python 3.12)
+*   **Docker** (for containerized deployment, optional)
+*   **Git** (for cloning and version control)
+*   **pip** (Python package manager)
+*   **Pillow** (Python Imaging Library fork, for image processing)
+*   **FastAPI** (for the web server API)
+*   **Uvicorn** (ASGI server for FastAPI)
+*   **NumPy** (for optimized image processing in some algorithm variants)
+*   (Other dependencies listed in `requirements.txt`)
 
 ### Installation & Setup
 1.  Clone the repository:
@@ -69,12 +108,10 @@ This section outlines the approach taken to understand and solve the surprise ch
     ```bash
     docker run surprise-challenge-solution [any_arguments_needed]
     ```
-    *(Explain what the Docker container does and how to interact with it or see its output.)*
 *   **(If running with Python scripts directly):**
     ```bash
     python main_script.py [any_arguments_needed]
     ```
-    *(Explain the main script and any necessary arguments.)*
 *   **(If using Shell scripts):**
     ```bash
     ./run_solution.sh
@@ -84,8 +121,15 @@ This section outlines the approach taken to understand and solve the surprise ch
 
 ```
 til-25-data-chefs-surprise/
-├── src/                        # Python source code
-├── scripts/                    # Shell scripts
+├── src/                        
+│   ├── surprise_server.py           # FastAPI server for challenge API
+│   ├── surprise_manager.py          # Core algorithm (v1, SAD/greedy)
+│   ├── surprise_manager_opti.py     # Optimized algorithm using NumPy
+│   ├── surprise_manager_new.py      # Variant with normalized cross-correlation
+│   ├── surprise_manager_working.py  # Alternative/working version
+│   ├── surprise_manager-template.py # Template/stub for starting new approaches
+│   └── ...                         # (Other Python source files may exist)
+├── scripts/                    # Shell scripts for automation/setup (if present)
 ├── data/                       # Input/output data for the challenge (if applicable)
 ├── Dockerfile                  # Docker configuration
 ├── .dockerignore               # Files to ignore during Docker build
@@ -93,10 +137,6 @@ til-25-data-chefs-surprise/
 ├── .gitignore
 └── README.md
 ```
-*(Adjust the file structure to match your actual repository layout.)*
-
-## 🙏 Acknowledgements (Optional)
-*   Any resources or tools that were particularly helpful.
 
 # TIL-AI 2025 Surprise Challenge
 
