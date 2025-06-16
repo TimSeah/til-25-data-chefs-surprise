@@ -8,6 +8,8 @@
 
 This repository contains a solution to the TIL-25 Hackathon "surprise challenge": reconstructing a vertically shredded document from its image slices. Given a list of JPEG-encoded vertical slices, the system must predict the correct permutation to reassemble the original document. This project outlines our approach and implementation to tackle it.
 
+![document reconstruc](https://github.com/user-attachments/assets/1a2f5e8f-ffbe-4363-8ab4-3f32c60095aa)
+
 ## 💻 Technologies Used
 
 *   **Python:** Core programming language for scripting and logic.
