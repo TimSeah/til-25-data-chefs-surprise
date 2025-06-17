@@ -2,7 +2,7 @@
 
 **Hackathon:** TIL-25 Hackathon
 **Team:** Data Chefs
-**Author:** lolkabash
+**Author:** TimSeah
 
 ## 📖 Description
 
@@ -92,7 +92,7 @@ This section outlines the approach taken to understand and solve the surprise ch
 ### Installation & Setup
 1.  Clone the repository:
     ```bash
-    git clone https://github.com/lolkabash/til-25-data-chefs-surprise.git
+    git clone https://github.com/TimSeah/til-25-data-chefs-surprise.git
     cd til-25-data-chefs-surprise
     ```
 2.  **(Python dependencies - if not fully handled by Docker)**
